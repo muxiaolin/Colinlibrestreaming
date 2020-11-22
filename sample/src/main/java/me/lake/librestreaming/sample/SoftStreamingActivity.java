@@ -15,18 +15,16 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.lake.librestreaming.filter.softaudiofilter.BaseSoftAudioFilter;
+import me.lake.librestreaming.filter.softfilter.AnimationFilterSoft;
+import me.lake.librestreaming.filter.softfilter.BlackWhiteFilterSoft;
+import me.lake.librestreaming.filter.softfilter.BlurFilterSoft;
+import me.lake.librestreaming.filter.softfilter.DoNothingFilterSoft;
+import me.lake.librestreaming.filter.softfilter.FixYFilterSoft;
+import me.lake.librestreaming.filter.softfilter.GrayFilterSoft;
+import me.lake.librestreaming.filter.softfilter.IconFilterSoft;
+import me.lake.librestreaming.filter.softfilter.SkinBlurFilterSoft;
 import me.lake.librestreaming.filter.softvideofilter.BaseSoftVideoFilter;
 import me.lake.librestreaming.model.RESConfig;
-import me.lake.librestreaming.sample.audiofilter.SetVolumeAudioFilter;
-import me.lake.librestreaming.sample.softfilter.AnimationFilterSoft;
-import me.lake.librestreaming.sample.softfilter.BlackWhiteFilterSoft;
-import me.lake.librestreaming.sample.softfilter.BlurFilterSoft;
-import me.lake.librestreaming.sample.softfilter.DoNothingFilterSoft;
-import me.lake.librestreaming.sample.softfilter.FixYFilterSoft;
-import me.lake.librestreaming.sample.softfilter.GrayFilterSoft;
-import me.lake.librestreaming.sample.softfilter.IconFilterSoft;
-import me.lake.librestreaming.sample.softfilter.SkinBlurFilterSoft;
 
 /**
  * Created by lake on 16-5-31.

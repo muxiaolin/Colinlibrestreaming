@@ -16,7 +16,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:text="rtmp://push-emergency5g.tingdao.com/jlkasjdfliajdsf/dafdsaflkjasdlfas234234?auth_key=1604889208-0-0-99223c445f5855f2e063f714c4a6b871"
             android:hint="RtmpAddr"/>
 
         <RadioGroup

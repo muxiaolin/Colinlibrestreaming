@@ -30,11 +30,11 @@ import me.lake.librestreaming.client.RESClient;
 import me.lake.librestreaming.core.listener.RESConnectionListener;
 import me.lake.librestreaming.core.listener.RESScreenShotListener;
 import me.lake.librestreaming.core.listener.RESVideoChangeListener;
+import me.lake.librestreaming.filter.audiofilter.SetVolumeAudioFilter;
 import me.lake.librestreaming.filter.softaudiofilter.BaseSoftAudioFilter;
+import me.lake.librestreaming.filter.view.AspectTextureView;
 import me.lake.librestreaming.model.RESConfig;
 import me.lake.librestreaming.model.Size;
-import me.lake.librestreaming.sample.audiofilter.SetVolumeAudioFilter;
-import me.lake.librestreaming.sample.ui.AspectTextureView;
 
 /**
  * Created by lake on 16-5-31.
@@ -54,9 +54,10 @@ public class BaseStreamingActivity extends AppCompatActivity implements RESConne
     protected Handler mainHander;
     protected Button btn_toggle;
     protected boolean started;
-    protected String rtmpaddr = "rtmp://push-emergency5g.tingdao.com/jlkasjdfliajdsf/dafdsaflkjasdlfas234234?auth_key=1604889208-0-0-99223c445f5855f2e063f714c4a6b871";
     protected int filtermode = RESConfig.FilterMode.SOFT;
     RESConfig resConfig;
+    //rtmp://push-emergency5g.tingdao.com/jlkasjdfliajdsf/dafdsaflkjasdlfas234234?auth_key=1604889208-0-0-99223c445f5855f2e063f714c4a6b871
+    protected String rtmpaddr = "rtmp://10.57.9.88/live/livestream";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

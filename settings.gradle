@@ -1,2 +1,3 @@
+include ':libfilter'
 include ':sample', ':librestreaming'
 rootProject.name = 'librestreaming'
