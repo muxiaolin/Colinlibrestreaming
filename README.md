@@ -1,3 +1,6 @@
+
+Thnaks https://github.com/lakeinchina/librestreaming
+
 ## Android real-time effect filter rtmp streaming library <br/> 安卓实时滤镜RTMP推流库
 
 This project uses Android lastest [MediaCodec API](https://developer.android.com/reference/android/media/MediaCodec.html) for video/audio encoding and popular C ibrary librtmp (source code included) for rtmp streaming, in addionion, provides ability to implement real-time effect filters after camera capturing phase and before encoding phase. Some features are:
