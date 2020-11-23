@@ -11,6 +11,10 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
 
         renderscriptTargetApi 20
+
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a"
+        }
     }
 
     buildTypes {
