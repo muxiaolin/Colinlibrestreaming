@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import java.nio.FloatBuffer;
 
 import me.lake.librestreaming.filter.hardvideofilter.BaseHardVideoFilter;
-import me.lake.librestreaming.filter.view.FakeView;
+import me.lake.librestreaming.filter.base.IFakeView;
 import me.lake.librestreaming.tools.GLESTools;
 
 /**
@@ -21,12 +21,12 @@ import me.lake.librestreaming.tools.GLESTools;
  * librestreaming project.
  */
 public class ViewHardFilter extends BaseHardVideoFilter {
-    private FakeView fakeViewGroup;
+    private IFakeView fakeViewGroup;
     private static final int ROOT_TEX_ID = 11;
     private SurfaceTexture rootViewSufaceTexture;
     private Surface rootViewSuface;
 
-    public ViewHardFilter(@NonNull FakeView viewGroup) {
+    public ViewHardFilter(@NonNull IFakeView viewGroup) {
         fakeViewGroup = viewGroup;
     }
 
@@ -43,8 +43,7 @@ public class ViewHardFilter extends BaseHardVideoFilter {
         glViewCamTextureLoc = GLES20.glGetUniformLocation(glViewProgram, "uViewCamTexture");
         glViewPostionLoc = GLES20.glGetAttribLocation(glViewProgram, "aViewPosition");
         glViewTextureCoordLoc = GLES20.glGetAttribLocation(glViewProgram, "aViewTextureCoord");
-        fakeViewGroup.init(VWidth,VHeight);
-        fakeViewGroup.startAnim();
+        fakeViewGroup.init(VWidth, VHeight);
     }
 
     @Override
@@ -52,7 +51,7 @@ public class ViewHardFilter extends BaseHardVideoFilter {
         //drawview
         Canvas canvas = rootViewSuface.lockCanvas(null);
         canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-        fakeViewGroup.draw(canvas);
+        fakeViewGroup.onDraw(cameraTexture, targetFrameBuffer, canvas);
         rootViewSuface.unlockCanvasAndPost(canvas);
         rootViewSufaceTexture.updateTexImage();
         GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, targetFrameBuffer);
@@ -92,7 +91,6 @@ public class ViewHardFilter extends BaseHardVideoFilter {
         super.onDestroy();
         rootViewSuface.release();
         rootViewSufaceTexture.release();
-        fakeViewGroup.stopAnim();
         fakeViewGroup.destroy();
     }
 

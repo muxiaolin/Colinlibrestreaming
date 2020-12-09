@@ -32,7 +32,7 @@ import me.lake.librestreaming.core.listener.RESScreenShotListener;
 import me.lake.librestreaming.core.listener.RESVideoChangeListener;
 import me.lake.librestreaming.filter.audiofilter.SetVolumeAudioFilter;
 import me.lake.librestreaming.filter.softaudiofilter.BaseSoftAudioFilter;
-import me.lake.librestreaming.filter.view.AspectTextureView;
+import me.lake.librestreaming.sample.view.AspectTextureView;
 import me.lake.librestreaming.model.RESConfig;
 import me.lake.librestreaming.model.Size;
 

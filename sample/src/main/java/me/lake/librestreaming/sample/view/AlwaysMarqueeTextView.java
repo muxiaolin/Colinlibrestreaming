@@ -1,4 +1,4 @@
-package me.lake.librestreaming.filter.view;
+package me.lake.librestreaming.sample.view;
 
 import android.content.Context;
 

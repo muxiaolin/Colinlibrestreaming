@@ -46,8 +46,8 @@ import me.lake.librestreaming.filter.hardfilter.extra.GPUImageCompatibleFilter;
 import me.lake.librestreaming.filter.hardvideofilter.BaseHardVideoFilter;
 import me.lake.librestreaming.filter.hardvideofilter.HardVideoGroupFilter;
 import me.lake.librestreaming.filter.hardvideofilter.OriginalHardVideoFilter;
-import me.lake.librestreaming.filter.view.FakeView;
 import me.lake.librestreaming.model.RESConfig;
+import me.lake.librestreaming.sample.view.FakeView;
 
 /**
  * Created by lake on 16-5-31.

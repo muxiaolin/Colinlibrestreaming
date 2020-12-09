@@ -1,10 +1,11 @@
-package me.lake.librestreaming.filter.view;
+package me.lake.librestreaming.sample.view;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -17,14 +18,15 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import me.lake.librestreaming.filter.R;
+import me.lake.librestreaming.filter.base.IFakeView;
+import me.lake.librestreaming.sample.R;
 
 
 /**
  * Created by lake on 02/12/16.
  * librestreaming project.
  */
-public class FakeView extends FrameLayout {
+public class FakeView extends FrameLayout implements IFakeView {
     Button btn_test;
     TextView tv_test;
     ImageView iv_test;
@@ -59,21 +61,21 @@ public class FakeView extends FrameLayout {
         this.addView(btn_test);
 
         iv_test = new ImageView(this.getContext());
-        int small = VWidth>VHeight?VHeight:VWidth;
-        testLayoutParams = new LayoutParams(small/2, small/2);
+        int small = VWidth > VHeight ? VHeight : VWidth;
+        testLayoutParams = new LayoutParams(small / 2, small / 2);
         testLayoutParams.gravity = Gravity.CENTER;
         iv_test.setImageResource(R.mipmap.cat);
         iv_test.setLayoutParams(testLayoutParams);
         this.addView(iv_test);
 
         sb_test = new SeekBar(this.getContext());
-        testLayoutParams = new LayoutParams(VWidth/2, ViewGroup.LayoutParams.WRAP_CONTENT);
-        testLayoutParams.gravity = Gravity.BOTTOM|Gravity.LEFT;
+        testLayoutParams = new LayoutParams(VWidth / 2, ViewGroup.LayoutParams.WRAP_CONTENT);
+        testLayoutParams.gravity = Gravity.BOTTOM | Gravity.LEFT;
         sb_test.setLayoutParams(testLayoutParams);
         this.addView(sb_test);
 
         AlwaysMarqueeTextView tv_marqueetest = new AlwaysMarqueeTextView(this.getContext());
-        testLayoutParams = new LayoutParams(VWidth/2, ViewGroup.LayoutParams.WRAP_CONTENT);
+        testLayoutParams = new LayoutParams(VWidth / 2, ViewGroup.LayoutParams.WRAP_CONTENT);
         testLayoutParams.gravity = Gravity.BOTTOM | Gravity.RIGHT;
         tv_marqueetest.setSingleLine();
         tv_marqueetest.setEllipsize(TextUtils.TruncateAt.MARQUEE);
@@ -86,6 +88,12 @@ public class FakeView extends FrameLayout {
         this.addView(tv_marqueetest);
 
         update();
+        startAnim();
+    }
+
+    @Override
+    public void onDraw(int cameraTexture, int targetFrameBuffer, Canvas canvas) {
+        super.draw(canvas);
     }
 
     private void update() {
@@ -94,6 +102,7 @@ public class FakeView extends FrameLayout {
     }
 
     public void destroy() {
+        stopAnim();
         this.removeAllViews();
     }
 
