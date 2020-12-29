@@ -30,8 +30,14 @@ public class RESClient {
     RESCoreParameters coreParameters;
     private RESRtmpSender rtmpSender;
     private RESFlvDataCollecter dataCollecter;
+    private boolean onlyAudio;
 
     public RESClient() {
+        this(false);
+    }
+
+    public RESClient(boolean onlyAudio) {
+        this.onlyAudio = onlyAudio;
         SyncOp = new Object();
         coreParameters = new RESCoreParameters();
         CallbackDelivery.i();
@@ -50,13 +56,15 @@ public class RESClient {
             coreParameters.rtmpAddr = resConfig.getRtmpAddr();
             coreParameters.printDetailMsg = resConfig.isPrintDetailMsg();
             coreParameters.senderQueueLength = 150;
-            videoClient = new RESVideoClient(coreParameters);
-            audioClient = new RESAudioClient(coreParameters);
-            if (!videoClient.prepare(resConfig)) {
-                LogTools.d("!!!!!videoClient.prepare()failed");
-                LogTools.d(coreParameters.toString());
-                return false;
+            if (!onlyAudio) {
+                videoClient = new RESVideoClient(coreParameters);
+                if (!videoClient.prepare(resConfig)) {
+                    LogTools.d("!!!!!videoClient.prepare()failed");
+                    LogTools.d(coreParameters.toString());
+                    return false;
+                }
             }
+            audioClient = new RESAudioClient(coreParameters);
             if (!audioClient.prepare(resConfig)) {
                 LogTools.d("!!!!!audioClient.prepare()failed");
                 LogTools.d(coreParameters.toString());
@@ -83,7 +91,9 @@ public class RESClient {
      */
     public void startStreaming() {
         synchronized (SyncOp) {
-            videoClient.startStreaming(dataCollecter);
+            if (videoClient != null) {
+                videoClient.startStreaming(dataCollecter);
+            }
             rtmpSender.start(coreParameters.rtmpAddr);
             audioClient.start(dataCollecter);
             LogTools.d("RESClient,startStreaming()");
@@ -95,7 +105,9 @@ public class RESClient {
      */
     public void stopStreaming() {
         synchronized (SyncOp) {
-            videoClient.stopStreaming();
+            if (videoClient != null) {
+                videoClient.stopStreaming();
+            }
             audioClient.stop();
             rtmpSender.stop();
             LogTools.d("RESClient,stopStreaming()");
@@ -129,21 +141,27 @@ public class RESClient {
      * @param surfaceTexture to rendering preview
      */
     public void startPreview(SurfaceTexture surfaceTexture, int visualWidth, int visualHeight) {
-        videoClient.startPreview(surfaceTexture, visualWidth, visualHeight);
-        LogTools.d("RESClient,startPreview()");
+        if (videoClient != null) {
+            videoClient.startPreview(surfaceTexture, visualWidth, visualHeight);
+            LogTools.d("RESClient,startPreview()");
+        }
     }
 
     public void updatePreview(int visualWidth, int visualHeight) {
-        videoClient.updatePreview(visualWidth, visualHeight);
-        LogTools.d("RESClient,updatePreview()");
+        if (videoClient != null) {
+            videoClient.updatePreview(visualWidth, visualHeight);
+            LogTools.d("RESClient,updatePreview()");
+        }
     }
 
     /**
      * @param releaseTexture true if you won`t reuse this surfaceTexture later
      */
     public void stopPreview(boolean releaseTexture) {
-        videoClient.stopPreview(releaseTexture);
-        LogTools.d("RESClient,stopPreview()");
+        if (videoClient != null) {
+            videoClient.stopPreview(releaseTexture);
+            LogTools.d("RESClient,stopPreview()");
+        }
     }
 
     /**
@@ -151,8 +169,11 @@ public class RESClient {
      */
     public boolean swapCamera() {
         synchronized (SyncOp) {
-            LogTools.d("RESClient,swapCamera()");
-            return videoClient.swapCamera();
+            if (videoClient != null) {
+                LogTools.d("RESClient,swapCamera()");
+                return videoClient.swapCamera();
+            }
+            return false;
         }
     }
 
@@ -165,7 +186,10 @@ public class RESClient {
      * @return the videofilter in use
      */
     public BaseSoftVideoFilter acquireSoftVideoFilter() {
-        return videoClient.acquireSoftVideoFilter();
+        if (videoClient != null) {
+            return videoClient.acquireSoftVideoFilter();
+        }
+        return null;
     }
 
     /**
@@ -173,7 +197,9 @@ public class RESClient {
      * call it with {@link #acquireSoftVideoFilter()}
      */
     public void releaseSoftVideoFilter() {
-        videoClient.releaseSoftVideoFilter();
+        if (videoClient != null) {
+            videoClient.releaseSoftVideoFilter();
+        }
     }
 
     /**
@@ -239,7 +265,9 @@ public class RESClient {
      * @param baseSoftVideoFilter videofilter to apply
      */
     public void setSoftVideoFilter(BaseSoftVideoFilter baseSoftVideoFilter) {
-        videoClient.setSoftVideoFilter(baseSoftVideoFilter);
+        if (videoClient != null) {
+            videoClient.setSoftVideoFilter(baseSoftVideoFilter);
+        }
     }
 
     /**
@@ -251,7 +279,10 @@ public class RESClient {
      * @return the videofilter in use
      */
     public BaseHardVideoFilter acquireHardVideoFilter() {
-        return videoClient.acquireHardVideoFilter();
+        if (videoClient != null) {
+            return videoClient.acquireHardVideoFilter();
+        }
+        return null;
     }
 
     /**
@@ -259,7 +290,9 @@ public class RESClient {
      * call it with {@link #acquireHardVideoFilter()}
      */
     public void releaseHardVideoFilter() {
-        videoClient.releaseHardVideoFilter();
+        if (videoClient != null) {
+            videoClient.releaseHardVideoFilter();
+        }
     }
 
     /**
@@ -271,7 +304,9 @@ public class RESClient {
      * @param baseHardVideoFilter videofilter to apply
      */
     public void setHardVideoFilter(BaseHardVideoFilter baseHardVideoFilter) {
-        videoClient.setHardVideoFilter(baseHardVideoFilter);
+        if (videoClient != null) {
+            videoClient.setHardVideoFilter(baseHardVideoFilter);
+        }
     }
 
     /**
@@ -329,7 +364,9 @@ public class RESClient {
      * @param videoChangeListener
      */
     public void setVideoChangeListener(RESVideoChangeListener videoChangeListener) {
-        videoClient.setVideoChangeListener(videoChangeListener);
+        if (videoClient != null) {
+            videoClient.setVideoChangeListener(videoChangeListener);
+        }
     }
 
     /**
@@ -347,7 +384,10 @@ public class RESClient {
      * @param targetPercent zoompercent
      */
     public boolean setZoomByPercent(float targetPercent) {
-        return videoClient.setZoomByPercent(targetPercent);
+        if (videoClient != null) {
+            return videoClient.setZoomByPercent(targetPercent);
+        }
+        return false;
     }
 
     /**
@@ -356,11 +396,16 @@ public class RESClient {
      * @return true if operation success
      */
     public boolean toggleFlashLight() {
-        return videoClient.toggleFlashLight();
+        if (videoClient != null) {
+            return videoClient.toggleFlashLight();
+        }
+        return false;
     }
 
     public void takeScreenShot(RESScreenShotListener listener) {
-        videoClient.takeScreenShot(listener);
+        if (videoClient != null) {
+            videoClient.takeScreenShot(listener);
+        }
     }
 
     /**
@@ -371,7 +416,9 @@ public class RESClient {
      */
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public void reSetVideoBitrate(int bitrate) {
-        videoClient.reSetVideoBitrate(bitrate);
+        if (videoClient != null) {
+            videoClient.reSetVideoBitrate(bitrate);
+        }
     }
 
     /**
@@ -380,7 +427,10 @@ public class RESClient {
      * @return current bitrate bits/sec
      */
     public int getVideoBitrate() {
-        return videoClient.getVideoBitrate();
+        if (videoClient != null) {
+            return videoClient.getVideoBitrate();
+        }
+        return 0;
     }
 
     /**
@@ -389,7 +439,9 @@ public class RESClient {
      * @param fps
      */
     public void reSetVideoFPS(int fps) {
-        videoClient.reSetVideoFPS(fps);
+        if (videoClient != null) {
+            videoClient.reSetVideoFPS(fps);
+        }
     }
 
     /**
@@ -408,7 +460,9 @@ public class RESClient {
         if (coreParameters.filterMode == RESCoreParameters.FILTER_MODE_SOFT) {
             throw new IllegalArgumentException("soft mode doesn`t support reSetVideoSize");
         } else {
-            videoClient.reSetVideoSize(targetVideoSize);
+            if (videoClient != null) {
+                videoClient.reSetVideoSize(targetVideoSize);
+            }
         }
     }
 

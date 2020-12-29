@@ -56,8 +56,9 @@ public class BaseStreamingActivity extends AppCompatActivity implements RESConne
     protected boolean started;
     protected int filtermode = RESConfig.FilterMode.SOFT;
     RESConfig resConfig;
-    //rtmp://push-emergency5g.tingdao.com/jlkasjdfliajdsf/dafdsaflkjasdlfas234234?auth_key=1604889208-0-0-99223c445f5855f2e063f714c4a6b871
-    protected String rtmpaddr = "rtmp://10.57.9.88/live/livestream";
+    //    protected String rtmpaddr = "rtmp://push-emergency5g.tingdao.com/jlkasjdfliajdsf/dafdsaflkjasdlfas234234?auth_key=1604889208-0-0-99223c445f5855f2e063f714c4a6b871";
+//    protected String rtmpaddr = "rtmp://10.57.9.88/live/livestream";
+    protected String rtmpaddr = "rtmp://push-emergency5g.tingdao.com/test123123/11123123?auth_key=1609755793-0-0-951e3cb0f05f3553901020188ea3e2b4";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -201,7 +202,7 @@ public class BaseStreamingActivity extends AppCompatActivity implements RESConne
         }
         if (resClient != null) {
             resClient.destroy();
-            resClient=null;
+            resClient = null;
         }
         super.onDestroy();
     }
@@ -233,7 +234,7 @@ public class BaseStreamingActivity extends AppCompatActivity implements RESConne
     public void onOpenConnectionResult(int result) {
         if (result == 0) {
             Log.e(TAG, "server IP = " + resClient.getServerIpAddr());
-        }else {
+        } else {
             Toast.makeText(this, "startfailed", Toast.LENGTH_SHORT).show();
         }
         /**
@@ -266,7 +267,7 @@ public class BaseStreamingActivity extends AppCompatActivity implements RESConne
     }
 
     protected SurfaceTexture texture;
-    protected int sw,sh;
+    protected int sw, sh;
 
     @Override
     public void onVideoSizeChanged(int width, int height) {

@@ -216,8 +216,12 @@ public class RESVideoClient {
 
     public boolean destroy() {
         synchronized (syncOp) {
-            camera.release();
-            videoCore.destroy();
+            if (camera != null) {
+                camera.release();
+            }
+            if (videoCore != null) {
+                videoCore.destroy();
+            }
             videoCore = null;
             camera = null;
             return true;
@@ -333,7 +337,7 @@ public class RESVideoClient {
                         resCoreParameters.previewVideoHeight, resCoreParameters.previewColorFormat);
                 resCoreParameters.previewVideoWidth = newParameters.previewVideoWidth;
                 resCoreParameters.previewVideoHeight = newParameters.previewVideoHeight;
-                resCoreParameters.previewBufferSize  = newParameters.previewBufferSize;
+                resCoreParameters.previewBufferSize = newParameters.previewBufferSize;
                 if ((isPreviewing || isStreaming)) {
                     LogTools.d("RESClient,reSetVideoSize.restartCamera");
                     camera.stopPreview();
